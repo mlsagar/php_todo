@@ -1,9 +1,17 @@
 <?php require "partials/head.php"; ?>
 
 <div class="todo-app">
-    <div class="input-section">
-        <form method="post" action="add_task.php">
-            <input id="todoInput" type="text" placeholder="Add item..." name="task" />
+    <div class="input-section" style="align-items: flex-start;">
+        <form method="post" style="display: flex; align-items: flex-start">
+            <div style="display: flex; flex-direction: column">
+                <input id="todoInput" type="text" placeholder="Add item..." name="task" value="<?= $_POST['task'] ?? ''?>" />
+                <?php if(isset($errors["task"])): ?>
+                    <span class="text-danger">
+                        <?= $errors["task"]; ?>
+                    </span>
+                <?php endif; ?>
+                
+            </div>
             <button id="addBtn" type="submit" class="add" name="add">Add</button>
             <button type="submit" class="add" id="update-button" style="display: none" name="update" aria-label="hidden">
                 Update
@@ -24,7 +32,7 @@
                 <li class="li">
                     <input class="form-check-input" type="checkbox" value="option1">
                     <label class="form-check-label" for="inlineCheckbox1"></label>
-                    <span class="todo-text"><?= $task['name']; ?></span>
+                    <span class="todo-text"><?= htmlspecialchars($task['name']); ?></span>
                     <!-- <span class="todo-text"></span> -->
                     <div class="button button-group">
                         <button type="button" class="btn btn-outline-danger" aria-label="delete"><i class="fa-solid fa-trash"></i></button>
